@@ -20,8 +20,8 @@ public static class Stream
 
             byte[][] buf = { new byte[bufferSize], new byte[bufferSize] };
             int[] bufl = { 0, 0 };
-            int bufno = 0;
-            IAsyncResult read = input.BeginRead(buf[bufno], 0, buf[bufno].Length, null, null);
+            var bufno = 0;
+            var read = input.BeginRead(buf[bufno], 0, buf[bufno].Length, null, null);
             IAsyncResult write = null;
 
             while (true)
@@ -31,10 +31,7 @@ public static class Stream
                 bufl[bufno] = input.EndRead(read);
 
                 // if zero bytes read, the copy is complete
-                if (bufl[bufno] == 0)
-                {
-                    break;
-                }
+                if (bufl[bufno] == 0) break;
 
                 // wait for the in-flight write operation, if one exists, to complete
                 // the only time one won't exist is after the very first read operation completes
@@ -69,8 +66,5 @@ public static class Stream
         catch
         {
         }
-
-       
     }
 }
-
